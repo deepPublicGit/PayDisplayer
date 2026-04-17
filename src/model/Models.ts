@@ -9,3 +9,8 @@ export interface FetchResponse {
     html?: string;
     error?: string;
 }
+
+export interface Result {
+    pay: number;
+    url: string;
+}

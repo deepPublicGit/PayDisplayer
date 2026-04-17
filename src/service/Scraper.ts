@@ -1,4 +1,4 @@
-import {FetchMessage, FetchResponse} from "../model/models";
+import {FetchMessage, FetchResponse, Result} from "../model/Models";
 
 const BASE_URL = "";
 
@@ -9,26 +9,26 @@ export class Scraper {
         this.maxRetries = maxRetries;
     }
 
-    async scrape(companyName: string): Promise<number> {
+    async scrape(companyName: string): Promise<Result> {
         return this.attempt(companyName, 0);
     }
 
-    private async attempt(companyName: string, retryCount: number): Promise<number> {
+    private async attempt(companyName: string, retryCount: number): Promise<Result> {
         const url = `${(BASE_URL)}/${companyName}/salaries`;
         try {
             const message: FetchMessage = {type: "FETCH_LEVELS", url};
             const response: FetchResponse = await chrome.runtime.sendMessage(message);
 
             if (!response.success || !response.html) {
-                return 0;
+                return {pay: 0, url:url};
             }
-            return this.parseResponse(response.html, companyName);
+            return {pay: this.parseResponse(response.html, companyName), url:url};
         } catch (e) {
             console.error(e);
             if (retryCount < this.maxRetries) {
                 return this.attempt(companyName, retryCount + 1);
             }
-            return 0;
+            return {pay: 0, url:url};
         }
     }
 
