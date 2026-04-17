@@ -16,8 +16,11 @@ export class PayBadge {
     }
 
     update(pay: number, url: string) {
-        if (!this.element)
+        if (!this.element) {
+            console.warn("PayDisplayer: Cannot update badge, element not injected");
             return;
+        }
+        console.log(`PayDisplayer: Updating badge with pay: ${pay}$ and url: ${url}`);
         this.element.textContent = `${pay}$`
         this.element.onclick = () => window.open(url, "_blank")
     }

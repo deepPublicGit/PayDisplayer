@@ -6,7 +6,7 @@ const COMPANY_NAME_SELECTORS = [
     ".job-details-jobs-unified-top-card__company-name a",
 ]
 
-class Controller {
+export class Controller {
     private badge: PayBadge;
     private payService: PayService;
 
@@ -22,8 +22,10 @@ class Controller {
     private process(): void {
         const {companyName, element} = this.extractCompanyName();
         if (!companyName || !element) {
+            console.log("PayDisplayer: No company name found");
             return;
         }
+        console.log(`PayDisplayer: Found company name: ${companyName}`);
         this.onJobView(companyName, element);
     }
 
@@ -37,12 +39,16 @@ class Controller {
                 return {companyName: ele.textContent.trim(), element: ele};
             }
         }
-        return;
+        return {companyName: null, element: null};
     }
 
     private async onJobView(companyName: string, element: Element) {
+        console.log(`PayDisplayer: Injecting badge for ${companyName}`);
         this.badge.inject(element);
         const result = await this.payService.getPay(companyName);
+        console.log(`PayDisplayer: Received pay data for ${companyName}:`, result);
         this.badge.update(result.pay, result.url);
     }
 }
+
+new Controller().activate();

@@ -7,6 +7,7 @@ export class PayService {
         this.scraper = new Scraper();
     }
     async getPay(companyName:string): Promise<Result> {
+        console.log(`PayService: Requesting pay for ${companyName}`);
         return await this.scraper.scrape(companyName);
     }
 }

@@ -2,13 +2,16 @@
   "name": "pay-displayer",
   "version": "0.1.0",
   "description": "Chrome extension to display pay information",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chrome": "^0.0.266"
+    "@types/chrome": "^0.0.266",
+    "copy-webpack-plugin": "^14.0.0",
+    "ts-loader": "^9.5.7",
+    "typescript": "^6.0.3",
+    "webpack-cli": "^7.0.2"
   }
 }

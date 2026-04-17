@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["ES2020", "DOM"]
-  }
+    "lib": ["ES2020", "DOM"],
+    "moduleResolution": "bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["chrome"]
+  },
+  "include": ["src/**/*.ts"]
 }
